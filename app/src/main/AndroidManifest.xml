@@ -21,6 +21,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.topheadline.TopHeadlinesActivity"
+            android:label="@string/top_headlines">
+        </activity>
+        <activity
+            android:name=".ui.countryselection.CountrySelectionActivity"
+            android:label="@string/country_selection">
+        </activity>
+        <activity
+            android:name=".ui.newssource.NewsSourcesActivity"
+            android:label="@string/search">
+        </activity>
+        <activity
+            android:name=".ui.languageselection.LanguageSelectionActivity"
+            android:label="@string/language_selection">
+        </activity>
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:label="@string/search">
+        </activity>
+
     </application>
 
 </manifest>
