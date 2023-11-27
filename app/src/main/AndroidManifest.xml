@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".NewsApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -25,7 +26,7 @@
         </activity>
 
         <activity
-            android:name=".ui.topheadline.TopHeadlinesActivity"
+            android:name=".ui.topheadline.TopHeadlineActivity"
             android:label="@string/top_headlines">
         </activity>
         <activity

@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.data.model.Article
 import com.bumptech.glide.Glide
+import javax.inject.Inject
 
-class TopHeadlineAdapter(private val context: Context, private var articles: List<Article>) :
+class TopHeadlineAdapter @Inject constructor (private val context: Context, private var articles: List<Article>) :
     RecyclerView.Adapter<TopHeadlineAdapter.ArticleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {

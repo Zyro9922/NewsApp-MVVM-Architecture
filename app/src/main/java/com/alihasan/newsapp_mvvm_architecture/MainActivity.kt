@@ -8,7 +8,7 @@ import com.alihasan.newsapp_mvvm_architecture.ui.countryselection.CountrySelecti
 import com.alihasan.newsapp_mvvm_architecture.ui.languageselection.LanguageSelectionActivity
 import com.alihasan.newsapp_mvvm_architecture.ui.newssource.NewsSourcesActivity
 import com.alihasan.newsapp_mvvm_architecture.ui.search.SearchActivity
-import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlinesActivity
+import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineActivity
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.btnTopHeadlines -> startActivity(Intent(this, TopHeadlinesActivity::class.java))
+            R.id.btnTopHeadlines -> startActivity(Intent(this, TopHeadlineActivity::class.java))
             R.id.btnNewsSources -> startActivity(Intent(this, NewsSourcesActivity::class.java))
             R.id.btnCountrySelection -> startActivity(Intent(this, CountrySelectionActivity::class.java))
             R.id.btnLanguageSelection -> startActivity(Intent(this, LanguageSelectionActivity::class.java))
