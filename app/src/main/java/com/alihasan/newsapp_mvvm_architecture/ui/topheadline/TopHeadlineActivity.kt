@@ -2,19 +2,15 @@ package com.alihasan.newsapp_mvvm_architecture.ui.topheadline
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.alihasan.newsapp_mvvm_architecture.NewsApplication
 import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.data.repository.TopHeadlineRepository
 import com.alihasan.newsapp_mvvm_architecture.di.component.DaggerTopHeadlineActivityComponent
 import com.alihasan.newsapp_mvvm_architecture.di.module.TopHeadlineActivityModule
 import com.alihasan.newsapp_mvvm_architecture.utils.AppConstant
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 import javax.inject.Inject
 
 class TopHeadlineActivity : AppCompatActivity() {
@@ -22,21 +18,29 @@ class TopHeadlineActivity : AppCompatActivity() {
     lateinit var topHeadlineRepository: TopHeadlineRepository
 
     @Inject
+    lateinit var topHeadlineViewModel: TopHeadlineViewModel
+
+    @Inject
     lateinit var articleAdapter: TopHeadlineAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_headlines)
-
         injectDependencies()
         initializeRecyclerView()
-        fetchData()
+        observeViewModelAndFetchData()
+        topHeadlineViewModel.fetchTopHeadlines(AppConstant.COUNTRY)
     }
 
     private fun initializeRecyclerView(){
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = articleAdapter
+
+        val swipeRefreshLayout = findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.setOnRefreshListener {
+            topHeadlineViewModel.fetchTopHeadlines(AppConstant.COUNTRY)
+        }
     }
 
     private fun injectDependencies() {
@@ -45,19 +49,16 @@ class TopHeadlineActivity : AppCompatActivity() {
             .topHeadlineActivityModule(TopHeadlineActivityModule(this)).build().inject(this)
     }
 
-    private fun fetchData() {
-        lifecycleScope.launch {
-            try {
-                val result = topHeadlineRepository.getTopHeadlines(AppConstant.COUNTRY)
-                // Update the UI on the main thread
-                withContext(Dispatchers.Main) {
-                    articleAdapter.updateData(result.articles)
-                }
-            } catch (e: HttpException) {
-                e.printStackTrace()
-            } catch (e: Exception) {
-                e.printStackTrace()
+    private fun observeViewModelAndFetchData() {
+        topHeadlineViewModel.articles.observe(this) { articles ->
+            articles?.let {
+                articleAdapter.updateData(it)
             }
+        }
+
+        topHeadlineViewModel.refreshingState.observe(this) { refreshingState ->
+            // Update the refreshing state of SwipeRefreshLayout
+            findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout).isRefreshing = refreshingState
         }
     }
 }
