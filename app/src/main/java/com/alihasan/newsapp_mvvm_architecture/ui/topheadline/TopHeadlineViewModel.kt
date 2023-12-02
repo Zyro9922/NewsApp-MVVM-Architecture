@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alihasan.newsapp_mvvm_architecture.data.model.Article
 import com.alihasan.newsapp_mvvm_architecture.data.repository.TopHeadlineRepository
+import com.alihasan.newsapp_mvvm_architecture.utils.AppConstant
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -13,17 +14,25 @@ import javax.inject.Inject
 class TopHeadlineViewModel @Inject constructor(private val topHeadlineRepository: TopHeadlineRepository) : ViewModel() {
 
     private val _articles = MutableLiveData<List<Article>>()
-    val articles: LiveData<List<Article>> get() = _articles
+    fun getTopViewModelListOfArticles() : MutableLiveData<List<Article>>{
+        return _articles
+    }
 
     private val _refreshingState = MutableLiveData<Boolean>()
     val refreshingState: LiveData<Boolean> get() = _refreshingState
 
-    fun fetchTopHeadlines(country: String) {
+    init {
+        fetchTopHeadlines()
+    }
+
+    fun fetchTopHeadlines() {
         _refreshingState.value = true
         viewModelScope.launch {
             try {
-                val result = topHeadlineRepository.getTopHeadlines(country)
-                _articles.value = result.articles
+                val result = topHeadlineRepository.getTopHeadlines(AppConstant.COUNTRY)
+                _articles.value = result.articles.filter {
+                    it.title != "[Removed]"
+                }
             } catch (e: HttpException) {
                 // Handle HTTP exception
                 e.printStackTrace()

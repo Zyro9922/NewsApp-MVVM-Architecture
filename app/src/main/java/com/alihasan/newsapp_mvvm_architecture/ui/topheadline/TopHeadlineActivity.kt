@@ -29,7 +29,6 @@ class TopHeadlineActivity : AppCompatActivity() {
         injectDependencies()
         initializeRecyclerView()
         observeViewModelAndFetchData()
-        topHeadlineViewModel.fetchTopHeadlines(AppConstant.COUNTRY)
     }
 
     private fun initializeRecyclerView(){
@@ -39,7 +38,7 @@ class TopHeadlineActivity : AppCompatActivity() {
 
         val swipeRefreshLayout = findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
         swipeRefreshLayout.setOnRefreshListener {
-            topHeadlineViewModel.fetchTopHeadlines(AppConstant.COUNTRY)
+            topHeadlineViewModel.fetchTopHeadlines()
         }
     }
 
@@ -50,7 +49,7 @@ class TopHeadlineActivity : AppCompatActivity() {
     }
 
     private fun observeViewModelAndFetchData() {
-        topHeadlineViewModel.articles.observe(this) { articles ->
+        topHeadlineViewModel.getTopViewModelListOfArticles().observe(this) { articles ->
             articles?.let {
                 articleAdapter.updateData(it)
             }

@@ -1,4 +1,5 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.topheadline
+
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
