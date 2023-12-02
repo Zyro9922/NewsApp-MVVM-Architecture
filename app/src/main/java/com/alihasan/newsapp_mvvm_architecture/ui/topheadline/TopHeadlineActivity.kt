@@ -8,6 +8,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.alihasan.newsapp_mvvm_architecture.NewsApplication
 import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.data.repository.TopHeadlineRepository
+import com.alihasan.newsapp_mvvm_architecture.databinding.ActivityTopHeadlinesBinding
 import com.alihasan.newsapp_mvvm_architecture.di.component.DaggerTopHeadlineActivityComponent
 import com.alihasan.newsapp_mvvm_architecture.di.module.TopHeadlineActivityModule
 import com.alihasan.newsapp_mvvm_architecture.utils.AppConstant
@@ -23,21 +24,22 @@ class TopHeadlineActivity : AppCompatActivity() {
     @Inject
     lateinit var articleAdapter: TopHeadlineAdapter
 
+    private lateinit var binding: ActivityTopHeadlinesBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_top_headlines)
+        binding = ActivityTopHeadlinesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         injectDependencies()
         initializeRecyclerView()
         observeViewModelAndFetchData()
     }
 
     private fun initializeRecyclerView(){
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = articleAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = articleAdapter
 
-        val swipeRefreshLayout = findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
-        swipeRefreshLayout.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             topHeadlineViewModel.fetchTopHeadlines()
         }
     }
@@ -57,7 +59,7 @@ class TopHeadlineActivity : AppCompatActivity() {
 
         topHeadlineViewModel.refreshingState.observe(this) { refreshingState ->
             // Update the refreshing state of SwipeRefreshLayout
-            findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout).isRefreshing = refreshingState
+            binding.swipeRefreshLayout.isRefreshing = refreshingState
         }
     }
 }
