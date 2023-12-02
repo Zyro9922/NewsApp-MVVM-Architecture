@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.alihasan.newsapp_mvvm_architecture.ui.countryselection.CountrySelectionActivity
 import com.alihasan.newsapp_mvvm_architecture.ui.languageselection.LanguageSelectionActivity
-import com.alihasan.newsapp_mvvm_architecture.ui.newssource.NewsSourcesActivity
+import com.alihasan.newsapp_mvvm_architecture.ui.newssource.NewsSourceActivity
 import com.alihasan.newsapp_mvvm_architecture.ui.search.SearchActivity
 import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineActivity
 
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         when (view.id) {
             R.id.btnTopHeadlines -> startActivity(Intent(this, TopHeadlineActivity::class.java))
-            R.id.btnNewsSources -> startActivity(Intent(this, NewsSourcesActivity::class.java))
+            R.id.btnNewsSources -> startActivity(Intent(this, NewsSourceActivity::class.java))
             R.id.btnCountrySelection -> startActivity(Intent(this, CountrySelectionActivity::class.java))
             R.id.btnLanguageSelection -> startActivity(Intent(this, LanguageSelectionActivity::class.java))
             R.id.btnSearch -> startActivity(Intent(this, SearchActivity::class.java))

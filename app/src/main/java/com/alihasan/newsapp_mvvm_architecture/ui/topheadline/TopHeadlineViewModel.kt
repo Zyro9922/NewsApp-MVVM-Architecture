@@ -8,7 +8,9 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class TopHeadlineViewModel @Inject constructor(private val topHeadlineRepository: TopHeadlineRepository) : ViewModel() {
+class TopHeadlineViewModel @Inject constructor(
+    private val topHeadlineRepository: TopHeadlineRepository
+) : ViewModel() {
 
     private val _articles = MutableLiveData<List<Article>>()
     fun getTopViewModelListOfArticles() : MutableLiveData<List<Article>>{

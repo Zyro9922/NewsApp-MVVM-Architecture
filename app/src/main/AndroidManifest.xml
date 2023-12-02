@@ -34,7 +34,7 @@
             android:label="@string/country_selection">
         </activity>
         <activity
-            android:name=".ui.newssource.NewsSourcesActivity"
+            android:name=".ui.newssource.NewsSourceActivity"
             android:label="@string/search">
         </activity>
         <activity

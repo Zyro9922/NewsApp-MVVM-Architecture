@@ -11,8 +11,6 @@ import com.alihasan.newsapp_mvvm_architecture.di.module.TopHeadlineActivityModul
 import javax.inject.Inject
 
 class TopHeadlineActivity : AppCompatActivity() {
-    @Inject
-    lateinit var topHeadlineRepository: TopHeadlineRepository
 
     @Inject
     lateinit var topHeadlineViewModel: TopHeadlineViewModel
