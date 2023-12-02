@@ -1,4 +1,4 @@
-package com.alihasan.newsapp_mvvm_architecture.data.model
+package com.alihasan.newsapp_mvvm_architecture.data.model.TopHeadlineModel
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,10 +1,7 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.topheadline
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.alihasan.newsapp_mvvm_architecture.data.model.Article
+import androidx.lifecycle.*
+import com.alihasan.newsapp_mvvm_architecture.data.model.TopHeadlineModel.Article
 import com.alihasan.newsapp_mvvm_architecture.data.repository.TopHeadlineRepository
 import com.alihasan.newsapp_mvvm_architecture.utils.AppConstant
 import kotlinx.coroutines.launch

@@ -1,6 +1,6 @@
 package com.alihasan.newsapp_mvvm_architecture.data.api
 
-import com.alihasan.newsapp_mvvm_architecture.data.model.TopHeadlinesResponse
+import com.alihasan.newsapp_mvvm_architecture.data.model.TopHeadlineModel.TopHeadlinesResponse
 import com.alihasan.newsapp_mvvm_architecture.utils.AppConstant.API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Headers

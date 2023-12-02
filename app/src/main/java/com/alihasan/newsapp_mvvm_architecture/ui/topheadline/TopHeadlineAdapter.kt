@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.RecyclerView
-import com.alihasan.newsapp_mvvm_architecture.data.model.Article
+import com.alihasan.newsapp_mvvm_architecture.data.model.TopHeadlineModel.Article
 import com.alihasan.newsapp_mvvm_architecture.databinding.TopHeadlineItemLayoutBinding
 import com.bumptech.glide.Glide
 import javax.inject.Inject
