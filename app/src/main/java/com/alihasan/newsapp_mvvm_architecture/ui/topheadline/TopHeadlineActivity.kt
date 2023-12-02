@@ -3,15 +3,11 @@ package com.alihasan.newsapp_mvvm_architecture.ui.topheadline
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.alihasan.newsapp_mvvm_architecture.NewsApplication
-import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.data.repository.TopHeadlineRepository
 import com.alihasan.newsapp_mvvm_architecture.databinding.ActivityTopHeadlinesBinding
 import com.alihasan.newsapp_mvvm_architecture.di.component.DaggerTopHeadlineActivityComponent
 import com.alihasan.newsapp_mvvm_architecture.di.module.TopHeadlineActivityModule
-import com.alihasan.newsapp_mvvm_architecture.utils.AppConstant
 import javax.inject.Inject
 
 class TopHeadlineActivity : AppCompatActivity() {

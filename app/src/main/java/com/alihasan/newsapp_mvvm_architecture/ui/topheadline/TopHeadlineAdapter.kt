@@ -1,47 +1,53 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.topheadline
 
-import android.content.Context
-import android.util.Log
+import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.RecyclerView
-import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.data.model.Article
+import com.alihasan.newsapp_mvvm_architecture.databinding.TopHeadlineItemLayoutBinding
 import com.bumptech.glide.Glide
 import javax.inject.Inject
 
-class TopHeadlineAdapter @Inject constructor (private val context: Context, private var articles: List<Article>) :
-    RecyclerView.Adapter<TopHeadlineAdapter.ArticleViewHolder>() {
+class TopHeadlineAdapter @Inject constructor (private var articles: List<Article>) :
+    RecyclerView.Adapter<TopHeadlineAdapter.DataViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.top_headline_item_layout, parent, false)
-        return ArticleViewHolder(view)
+    class DataViewHolder(private val binding: TopHeadlineItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(article: Article) {
+            binding.textViewTitle.text = article.title
+            binding.textViewDescription.text = article.description
+            binding.textViewSource.text = article.source.name
+            Glide.with(binding.imageViewBanner.context)
+                .load(article.imageUrl)
+                .into(binding.imageViewBanner)
+            itemView.setOnClickListener {
+                val builder = CustomTabsIntent.Builder()
+                val customTabsIntent = builder.build()
+                customTabsIntent.launchUrl(it.context, Uri.parse(article.url))
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        val article = articles[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        DataViewHolder(
+            TopHeadlineItemLayoutBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
 
-        // Load image using Glide
-        Glide.with(context)
-            .load(article.imageUrl)
-            .into(holder.itemView.findViewById(R.id.imageViewBanner))
-
-        holder.itemView.findViewById<TextView>(R.id.textViewTitle).text = article.title
-        holder.itemView.findViewById<TextView>(R.id.textViewDescription).text = article.description
-        holder.itemView.findViewById<TextView>(R.id.textViewSource).text = article.source.name
-    }
+    override fun onBindViewHolder(holder: DataViewHolder, position: Int) =
+        holder.bind(articles[position])
 
     override fun getItemCount(): Int {
         return articles.size
     }
 
     fun updateData(newArticles: List<Article>) {
-        Log.d("ZYRO", newArticles.toString());
         articles = newArticles
         notifyDataSetChanged()
     }
-
-    inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

@@ -16,6 +16,6 @@ class TopHeadlineActivityModule(private val activity: AppCompatActivity) {
     }
 
     @Provides
-    fun provideTopHeadlineAdapter() = TopHeadlineAdapter(activity, ArrayList())
+    fun provideTopHeadlineAdapter() = TopHeadlineAdapter(ArrayList())
 
 }
