@@ -1,13 +1,21 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.topheadline
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alihasan.newsapp_mvvm_architecture.NewsApplication
+import com.alihasan.newsapp_mvvm_architecture.data.model.TopHeadlineModel.Article
 import com.alihasan.newsapp_mvvm_architecture.data.repository.TopHeadlineRepository
 import com.alihasan.newsapp_mvvm_architecture.databinding.ActivityTopHeadlinesBinding
 import com.alihasan.newsapp_mvvm_architecture.di.component.DaggerTopHeadlineActivityComponent
 import com.alihasan.newsapp_mvvm_architecture.di.module.TopHeadlineActivityModule
+import com.alihasan.newsapp_mvvm_architecture.ui.base.UiState
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TopHeadlineActivity : AppCompatActivity() {
@@ -26,7 +34,7 @@ class TopHeadlineActivity : AppCompatActivity() {
         setContentView(binding.root)
         injectDependencies()
         initializeRecyclerView()
-        observeViewModelAndFetchData()
+        setupObserver()
     }
 
     private fun initializeRecyclerView(){
@@ -44,10 +52,25 @@ class TopHeadlineActivity : AppCompatActivity() {
             .topHeadlineActivityModule(TopHeadlineActivityModule(this)).build().inject(this)
     }
 
-    private fun observeViewModelAndFetchData() {
-        topHeadlineViewModel.getTopViewModelListOfArticles().observe(this) { articles ->
-            articles?.let {
-                articleAdapter.updateData(it)
+    private fun setupObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                topHeadlineViewModel.uiState.collect {
+                    when (it) {
+                        is UiState.Success -> {
+                            articleAdapter.updateData(it.data)
+                            binding.recyclerView.visibility = View.VISIBLE
+                        }
+                        is UiState.Loading -> {
+                            binding.recyclerView.visibility = View.GONE
+                        }
+                        is UiState.Error -> {
+                            //Handle Error
+                            Toast.makeText(this@TopHeadlineActivity, it.message, Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    }
+                }
             }
         }
 
