@@ -1,5 +1,6 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.topheadline
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.alihasan.newsapp_mvvm_architecture.data.model.TopHeadlineModel.Article
 import com.alihasan.newsapp_mvvm_architecture.data.repository.TopHeadlineRepository
@@ -23,6 +24,7 @@ class TopHeadlineViewModel @Inject constructor(
     val refreshingState: LiveData<Boolean> get() = _refreshingState
 
     fun fetchTopHeadlines(source: String? = null) {
+        Log.d("ZYRO", "source is: ${source}");
         _refreshingState.value = true
         viewModelScope.launch {
             try {
@@ -31,6 +33,7 @@ class TopHeadlineViewModel @Inject constructor(
                     it.title != "[Removed]" &&
                             (source == null || it.source.name == source)
                 }
+                Log.d("ZYRO", "filteredArticles ${filteredArticles.size}");
                 _uiState.value = UiState.Success(filteredArticles)
             } catch (e: HttpException) {
                 // Handle HTTP exception

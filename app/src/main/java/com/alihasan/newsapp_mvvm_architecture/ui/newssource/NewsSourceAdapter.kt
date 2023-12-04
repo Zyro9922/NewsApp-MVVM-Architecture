@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.data.model.SourceModel.Source
 import com.alihasan.newsapp_mvvm_architecture.databinding.SourceItemLayoutBinding
+import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineActivity
 import javax.inject.Inject
 class NewsSourceAdapter @Inject constructor(private var sources: List<Source>) :
     RecyclerView.Adapter<NewsSourceAdapter.DataViewHolder>() {
@@ -21,7 +22,8 @@ class NewsSourceAdapter @Inject constructor(private var sources: List<Source>) :
             binding.categoryTextView.text = "${itemView.context.getString(R.string.category_text)}: ${source.category.capitalize()}"
 
             itemView.setOnClickListener {
-
+                val intent = TopHeadlineActivity.getStartIntentForSource(itemView.context, source.sourceName)
+                itemView.context.startActivity(intent)
             }
         }
     }
