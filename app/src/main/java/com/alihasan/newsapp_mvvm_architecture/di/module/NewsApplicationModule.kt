@@ -1,8 +1,10 @@
 package com.alihasan.newsapp_mvvm_architecture.di.module
 
 import android.content.Context
+import androidx.room.Room
 import com.alihasan.newsapp_mvvm_architecture.NewsApplication
 import com.alihasan.newsapp_mvvm_architecture.data.api.NetworkService
+import com.alihasan.newsapp_mvvm_architecture.data.local.database.AppDatabase
 import com.alihasan.newsapp_mvvm_architecture.di.ApplicationContext
 import com.alihasan.newsapp_mvvm_architecture.di.BaseUrl
 import dagger.Module
@@ -39,6 +41,15 @@ class NewsApplicationModule(private val application: NewsApplication) {
             .addConverterFactory(gsonConverterFactory)
             .build()
             .create(NetworkService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabaseService(): AppDatabase {
+        return Room.databaseBuilder(
+            application,
+            AppDatabase::class.java, "database-name"
+        ).build()
     }
 
 }

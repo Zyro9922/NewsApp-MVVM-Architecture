@@ -5,5 +5,5 @@ object AppConstant {
     const val API_KEY = "0843ed33be504df5b1827c1ffeed161f"
     const val COUNTRY = "us"
     const val LANGUAGE = "en"
-
+    const val TopHeadlineDatabaseUpdateInterval: Long = 4
 }
