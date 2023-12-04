@@ -17,6 +17,7 @@ import com.alihasan.newsapp_mvvm_architecture.databinding.ActivityTopHeadlinesBi
 import com.alihasan.newsapp_mvvm_architecture.di.component.DaggerTopHeadlineActivityComponent
 import com.alihasan.newsapp_mvvm_architecture.di.module.TopHeadlineActivityModule
 import com.alihasan.newsapp_mvvm_architecture.ui.base.UiState
+import com.alihasan.newsapp_mvvm_architecture.utils.AppConstant
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -118,8 +119,8 @@ class TopHeadlineActivity : AppCompatActivity() {
         val extrasLanguage = intent.getStringExtra(EXTRAS_LANGUAGE)
 
         when {
-            extrasSource != null -> topHeadlineViewModel.fetchTopHeadlines(extrasSource)
-            else -> topHeadlineViewModel.fetchTopHeadlines()
+            extrasSource != null -> topHeadlineViewModel.fetchTopHeadlines(sources = extrasSource)
+            else -> topHeadlineViewModel.fetchTopHeadlines(country = extrasCountry)
         }
     }
 }

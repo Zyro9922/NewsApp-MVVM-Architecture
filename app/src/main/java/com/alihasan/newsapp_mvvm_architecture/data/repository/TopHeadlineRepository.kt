@@ -8,8 +8,8 @@ import javax.inject.Inject
 @ActivityScope
 class TopHeadlineRepository @Inject constructor(private val networkService: NetworkService) {
 
-    suspend fun getTopHeadlines(country: String): TopHeadlinesResponse {
-        return networkService.getTopHeadlines(country)
+    suspend fun getTopHeadlines(country: String? = null, sources: String? = null, category: String? = null): TopHeadlinesResponse {
+        return networkService.getTopHeadlines(country, sources, category)
     }
 
 }

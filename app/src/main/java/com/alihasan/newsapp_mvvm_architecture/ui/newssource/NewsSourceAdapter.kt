@@ -22,7 +22,7 @@ class NewsSourceAdapter @Inject constructor(private var sources: List<Source>) :
             binding.categoryTextView.text = "${itemView.context.getString(R.string.category_text)}: ${source.category.capitalize()}"
 
             itemView.setOnClickListener {
-                val intent = TopHeadlineActivity.getStartIntentForSource(itemView.context, source.sourceName)
+                val intent = TopHeadlineActivity.getStartIntentForSource(itemView.context, source.id)
                 itemView.context.startActivity(intent)
             }
         }
