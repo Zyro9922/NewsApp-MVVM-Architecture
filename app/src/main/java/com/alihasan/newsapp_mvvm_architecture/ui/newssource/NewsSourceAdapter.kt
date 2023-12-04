@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.RecyclerView
+import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.data.model.SourceModel.Source
 import com.alihasan.newsapp_mvvm_architecture.databinding.SourceItemLayoutBinding
 import javax.inject.Inject
@@ -17,12 +18,10 @@ class NewsSourceAdapter @Inject constructor(private var sources: List<Source>) :
         fun bind(source: Source) {
             binding.sourceNameTextView.text = source.sourceName
             binding.sourceDescriptionTextView.text = source.sourceDescription
-            binding.categoryTextView.text = source.category
+            binding.categoryTextView.text = "${itemView.context.getString(R.string.category_text)}: ${source.category.capitalize()}"
 
             itemView.setOnClickListener {
-                val builder = CustomTabsIntent.Builder()
-                val customTabsIntent = builder.build()
-                customTabsIntent.launchUrl(it.context, Uri.parse(source.sourceUrl))
+
             }
         }
     }

@@ -5,4 +5,5 @@
     <string name="country_selection">Country Selection</string>
     <string name="language_selection">Language Selection</string>
     <string name="search">Search</string>
+    <string name="category_text">Category</string>
 </resources>
