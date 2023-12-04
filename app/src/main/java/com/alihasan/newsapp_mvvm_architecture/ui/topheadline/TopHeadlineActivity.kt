@@ -1,5 +1,7 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.topheadline
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -20,6 +22,34 @@ import javax.inject.Inject
 
 class TopHeadlineActivity : AppCompatActivity() {
 
+    companion object {
+
+        const val EXTRAS_COUNTRY = "EXTRAS_COUNTRY"
+        const val EXTRAS_SOURCE = "EXTRAS_SOURCE"
+        const val EXTRAS_LANGUAGE = "EXTRAS_LANGUAGE"
+
+        fun getStartIntentForCountry(context: Context, country: String): Intent {
+            return Intent(context, TopHeadlineActivity::class.java)
+                .apply {
+                    putExtra(EXTRAS_COUNTRY, country)
+                }
+        }
+
+        fun getStartIntentForSource(context: Context, source: String): Intent {
+            return Intent(context, TopHeadlineActivity::class.java)
+                .apply {
+                    putExtra(EXTRAS_SOURCE, source)
+                }
+        }
+
+        fun getStartIntentForLanguage(context: Context, language: String): Intent {
+            return Intent(context, TopHeadlineActivity::class.java)
+                .apply {
+                    putExtra(EXTRAS_LANGUAGE, language)
+                }
+        }
+    }
+
     @Inject
     lateinit var topHeadlineViewModel: TopHeadlineViewModel
 
@@ -35,6 +65,8 @@ class TopHeadlineActivity : AppCompatActivity() {
         injectDependencies()
         initializeRecyclerView()
         setupObserver()
+
+        handleFetching()
     }
 
     private fun initializeRecyclerView(){
@@ -42,7 +74,7 @@ class TopHeadlineActivity : AppCompatActivity() {
         binding.recyclerView.adapter = articleAdapter
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            topHeadlineViewModel.fetchTopHeadlines()
+            handleFetching()
         }
     }
 
@@ -77,6 +109,17 @@ class TopHeadlineActivity : AppCompatActivity() {
         topHeadlineViewModel.refreshingState.observe(this) { refreshingState ->
             // Update the refreshing state of SwipeRefreshLayout
             binding.swipeRefreshLayout.isRefreshing = refreshingState
+        }
+    }
+
+    private fun handleFetching(){
+        val extrasSource = intent.getStringExtra(EXTRAS_SOURCE)
+        val extrasCountry = intent.getStringExtra(EXTRAS_COUNTRY)
+        val extrasLanguage = intent.getStringExtra(EXTRAS_LANGUAGE)
+
+        when {
+            extrasSource != null -> topHeadlineViewModel.fetchTopHeadlines(extrasSource)
+            else -> topHeadlineViewModel.fetchTopHeadlines()
         }
     }
 }

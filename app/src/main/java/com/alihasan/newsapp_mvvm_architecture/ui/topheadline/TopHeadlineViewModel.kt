@@ -22,19 +22,16 @@ class TopHeadlineViewModel @Inject constructor(
     private val _refreshingState = MutableLiveData<Boolean>(false)
     val refreshingState: LiveData<Boolean> get() = _refreshingState
 
-    init {
-        fetchTopHeadlines()
-    }
-
-    fun fetchTopHeadlines() {
+    fun fetchTopHeadlines(source: String? = null) {
         _refreshingState.value = true
         viewModelScope.launch {
             try {
-                _uiState.value = UiState.Success(
-                    topHeadlineRepository.getTopHeadlines(AppConstant.COUNTRY).articles.filter {
-                        it.title != "[Removed]"
-                    }
-                )
+                val topHeadlineResponse = topHeadlineRepository.getTopHeadlines(AppConstant.COUNTRY)
+                val filteredArticles = topHeadlineResponse.articles.filter {
+                    it.title != "[Removed]" &&
+                            (source == null || it.source.name == source)
+                }
+                _uiState.value = UiState.Success(filteredArticles)
             } catch (e: HttpException) {
                 // Handle HTTP exception
                 _uiState.value = UiState.Error(e.toString())
@@ -49,4 +46,5 @@ class TopHeadlineViewModel @Inject constructor(
             }
         }
     }
+
 }
