@@ -1,5 +1,6 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.topheadline
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.alihasan.newsapp_mvvm_architecture.data.model.TopHeadlineModel.Article
 import com.alihasan.newsapp_mvvm_architecture.data.repository.TopHeadlineRepository
