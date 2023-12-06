@@ -13,3 +13,11 @@ annotation class ActivityContext
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class BaseUrl
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class BackgroundColor
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class TextColor
