@@ -1,7 +1,10 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.topheadline
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.alihasan.newsapp_mvvm_architecture.data.local.dao.TopHeadlinesDao
 import com.alihasan.newsapp_mvvm_architecture.data.model.TopHeadlineModel.Article
 import com.alihasan.newsapp_mvvm_architecture.data.model.TopHeadlineModel.TopHeadlinesEntity
@@ -70,6 +73,30 @@ class TopHeadlineViewModel @Inject constructor(
             } catch (e: Exception) {
                 // Handle other exceptions
                 handleException(e)
+            } finally {
+                // Ensure that refreshing animation stops in both success and error cases
+                _refreshingState.value = false
+            }
+        }
+    }
+
+    fun fetchSearchResults(query: String) {
+        _refreshingState.value = true
+        viewModelScope.launch {
+            try {
+                _uiState.value = UiState.Success(
+                    topHeadlineRepository.getEverything(query).articles.filter {
+                        it.title != "[Removed]"
+                    }
+                )
+            } catch (e: HttpException) {
+                // Handle HTTP exception
+                _uiState.value = UiState.Error(e.toString())
+                e.printStackTrace()
+            } catch (e: Exception) {
+                // Handle other exceptions
+                _uiState.value = UiState.Error(e.toString())
+                e.printStackTrace()
             } finally {
                 // Ensure that refreshing animation stops in both success and error cases
                 _refreshingState.value = false
