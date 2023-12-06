@@ -57,4 +57,23 @@
         <item>ve:Venezuela</item>
         <item>za:South Africa</item>
     </string-array>
+
+    <!-- Array of language code and name pairs -->
+    <string-array name="language_code_name_pairs">
+        <item>ar:Arabic</item>
+        <item>de:German</item>
+        <item>en:English</item>
+        <item>es:Spanish</item>
+        <item>fr:French</item>
+        <item>he:Hebrew</item>
+        <item>it:Italian</item>
+        <item>nl:Dutch</item>
+        <item>no:Norwegian</item>
+        <item>pt:Portuguese</item>
+        <item>ru:Russian</item>
+        <item>sv:Swedish</item>
+        <item>ud:Undefined</item>
+        <item>zh:Chinese</item>
+    </string-array>
+
 </resources>

@@ -15,7 +15,7 @@ interface NetworkService {
     suspend fun getTopHeadlines(
         @Query("country") country: String? = null,
         @Query("sources") sources: String? = null,
-        @Query("category") category: String? = null
+        @Query("language") language: String? = null
     ): TopHeadlinesResponse
 
     @Headers("X-Api-Key: $API_KEY")

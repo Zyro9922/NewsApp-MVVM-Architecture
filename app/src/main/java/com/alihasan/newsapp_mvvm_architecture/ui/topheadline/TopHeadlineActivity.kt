@@ -120,6 +120,7 @@ class TopHeadlineActivity : AppCompatActivity() {
 
         when {
             extrasSource != null -> topHeadlineViewModel.fetchTopHeadlines(sources = extrasSource)
+            extrasLanguage != null -> topHeadlineViewModel.fetchTopHeadlines(language = extrasLanguage)
             else -> topHeadlineViewModel.fetchTopHeadlines(country = extrasCountry)
         }
     }

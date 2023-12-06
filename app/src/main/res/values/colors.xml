@@ -9,4 +9,6 @@
     <color name="country_selection_item_background_color">#FFA500</color>
     <color name="country_selection_item_text_color">#000000</color>
 
+    <color name="language_selection_item_background_color">#4285F4</color>
+    <color name="language_selection_item_text_color">#FFFFFF</color>
 </resources>

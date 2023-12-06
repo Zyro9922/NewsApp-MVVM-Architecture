@@ -27,7 +27,7 @@ class TopHeadlineViewModel @Inject constructor(
     private val _refreshingState = MutableLiveData<Boolean>(false)
     val refreshingState: LiveData<Boolean> get() = _refreshingState
 
-    fun fetchTopHeadlines(country: String? = null, sources: String? = null, category: String? = null) {
+    fun fetchTopHeadlines(country: String? = null, sources: String? = null, language: String? = null) {
         viewModelScope.launch {
             _refreshingState.value = true
             try {
@@ -35,7 +35,7 @@ class TopHeadlineViewModel @Inject constructor(
                     System.currentTimeMillis() - TimeUnit.HOURS.toMillis(AppConstant.TopHeadlineDatabaseUpdateInterval) // 4 hours threshold
                 val localData = topHeadlinesDao.getTopHeadlines(minTimestamp)
 
-                val shouldInteractWithLocal = shouldInteractWithLocal(country, sources, category)
+                val shouldInteractWithLocal = shouldInteractWithLocal(country, sources, language)
 
                 val uiState = if (localData != null && shouldInteractWithLocal) {
                     // Use data from the local database
@@ -43,7 +43,7 @@ class TopHeadlineViewModel @Inject constructor(
                     UiState.Success(localData.articles)
                 } else {
                     Log.d("TopHeadlineViewModel", "Fetching data from network")
-                    val topHeadlineResponse = topHeadlineRepository.getTopHeadlines(country, sources, category)
+                    val topHeadlineResponse = topHeadlineRepository.getTopHeadlines(country, sources, language)
                     val filteredArticles = topHeadlineResponse.articles.filter {
                         it.title != "[Removed]"
                     }

@@ -14,9 +14,6 @@ import javax.inject.Inject
 class CountrySelectionActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var context: Context
-
-    @Inject
     lateinit var adapter: IntentfulListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
