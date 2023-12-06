@@ -24,6 +24,10 @@ class SearchViewModel @Inject constructor(
     private val _refreshingState = MutableLiveData<Boolean>(false)
     val refreshingState: LiveData<Boolean> get() = _refreshingState
 
+    init {
+        fetchSearchResults("bitcoin")
+    }
+
     fun fetchSearchResults(query: String) {
         _refreshingState.value = true
         viewModelScope.launch {
