@@ -11,5 +11,7 @@ class TopHeadlineRepository @Inject constructor(private val networkService: Netw
     suspend fun getTopHeadlines(country: String? = null, sources: String? = null, language: String? = null): TopHeadlinesResponse {
         return networkService.getTopHeadlines(country, sources, language)
     }
-
+    suspend fun getEverything(query: String): TopHeadlinesResponse {
+        return networkService.getEverything(query)
+    }
 }
