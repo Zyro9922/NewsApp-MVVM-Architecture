@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.di.component.DaggerCountrySelectionActivityComponent
 import com.alihasan.newsapp_mvvm_architecture.di.module.CountrySelectionActivityModule
-import com.alihasan.newsapp_mvvm_architecture.ui.common.StringListAdapter
+import com.alihasan.newsapp_mvvm_architecture.ui.common.IntentfulListAdapter
 import javax.inject.Inject
 
 class CountrySelectionActivity : AppCompatActivity() {
@@ -17,7 +17,7 @@ class CountrySelectionActivity : AppCompatActivity() {
     lateinit var context: Context
 
     @Inject
-    lateinit var adapter: StringListAdapter
+    lateinit var adapter: IntentfulListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineActivity
 
-class StringListAdapter(
+class IntentfulListAdapter(
     private val context: Context,
     private val titleList: List<String>,
     private val codeList: List<String>,
     private val backgroundColor: Int,
     private val textColor: Int,
     private val intentType: IntentType
-) : RecyclerView.Adapter<StringListAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<IntentfulListAdapter.ViewHolder>() {
 
     enum class IntentType {
         COUNTRY, SOURCE, LANGUAGE

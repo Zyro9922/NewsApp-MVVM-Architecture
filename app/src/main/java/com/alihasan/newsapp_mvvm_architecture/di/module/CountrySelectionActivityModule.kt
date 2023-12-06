@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.di.BackgroundColor
 import com.alihasan.newsapp_mvvm_architecture.di.TextColor
-import com.alihasan.newsapp_mvvm_architecture.ui.common.StringListAdapter
+import com.alihasan.newsapp_mvvm_architecture.ui.common.IntentfulListAdapter
 import dagger.Module
 import dagger.Provides
 
@@ -39,8 +39,8 @@ class CountrySelectionActivityModule(private val activity: AppCompatActivity) {
         context: Context,
         @BackgroundColor backgroundColor: Int,
         @TextColor textColor: Int
-    ): StringListAdapter {
-        return StringListAdapter(context, provideListOfCountriesName(), provideListOfCountries(), backgroundColor, textColor, StringListAdapter.IntentType.COUNTRY)
+    ): IntentfulListAdapter {
+        return IntentfulListAdapter(context, provideListOfCountriesName(), provideListOfCountries(), backgroundColor, textColor, IntentfulListAdapter.IntentType.COUNTRY)
     }
 
     @Provides
