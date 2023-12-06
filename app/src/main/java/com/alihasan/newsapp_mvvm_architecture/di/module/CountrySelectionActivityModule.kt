@@ -2,6 +2,7 @@ package com.alihasan.newsapp_mvvm_architecture.di.module
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.di.BackgroundColor
 import com.alihasan.newsapp_mvvm_architecture.di.TextColor
@@ -18,8 +19,19 @@ class CountrySelectionActivityModule(private val activity: AppCompatActivity) {
     }
 
     @Provides
+    fun provideListOfCountriesName(): List<String> {
+        val countryCodeNamePairs = activity.resources.getStringArray(R.array.country_code_name_pairs)
+        return countryCodeNamePairs.map { pair ->
+            pair.split(":")[1]
+        }
+    }
+
+    @Provides
     fun provideListOfCountries(): List<String> {
-        return activity.resources.getStringArray(R.array.country_list).toList()
+        val countryCodeNamePairs = activity.resources.getStringArray(R.array.country_code_name_pairs)
+        return countryCodeNamePairs.map { pair ->
+            pair.split(":")[0]
+        }
     }
 
     @Provides
@@ -28,18 +40,18 @@ class CountrySelectionActivityModule(private val activity: AppCompatActivity) {
         @BackgroundColor backgroundColor: Int,
         @TextColor textColor: Int
     ): StringListAdapter {
-        return StringListAdapter(context, provideListOfCountries(), backgroundColor, textColor)
+        return StringListAdapter(context, provideListOfCountriesName(), provideListOfCountries(), backgroundColor, textColor, StringListAdapter.IntentType.COUNTRY)
     }
 
     @Provides
     @BackgroundColor
     fun provideBackgroundColor(): Int {
-        return 0xFFFFA500.toInt() // Orange color
+        return ContextCompat.getColor(activity, R.color.country_selection_item_background_color)
     }
 
     @Provides
     @TextColor
     fun provideTextColor(): Int {
-        return 0xFF000000.toInt() // Black color (contrasting)
+        return ContextCompat.getColor(activity, R.color.country_selection_item_text_color)
     }
 }

@@ -1,59 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="country_list">
-        <item>ae</item>
-        <item>ar</item>
-        <item>at</item>
-        <item>au</item>
-        <item>be</item>
-        <item>bg</item>
-        <item>br</item>
-        <item>ca</item>
-        <item>ch</item>
-        <item>cn</item>
-        <item>co</item>
-        <item>cu</item>
-        <item>cz</item>
-        <item>de</item>
-        <item>eg</item>
-        <item>fr</item>
-        <item>gb</item>
-        <item>gr</item>
-        <item>hk</item>
-        <item>hu</item>
-        <item>id</item>
-        <item>ie</item>
-        <item>il</item>
-        <item>in</item>
-        <item>it</item>
-        <item>jp</item>
-        <item>kr</item>
-        <item>lt</item>
-        <item>lv</item>
-        <item>ma</item>
-        <item>mx</item>
-        <item>my</item>
-        <item>ng</item>
-        <item>nl</item>
-        <item>no</item>
-        <item>nz</item>
-        <item>ph</item>
-        <item>pl</item>
-        <item>pt</item>
-        <item>ro</item>
-        <item>rs</item>
-        <item>ru</item>
-        <item>sa</item>
-        <item>se</item>
-        <item>sg</item>
-        <item>si</item>
-        <item>sk</item>
-        <item>th</item>
-        <item>tr</item>
-        <item>tw</item>
-        <item>ua</item>
-        <item>us</item>
-        <item>ve</item>
-        <item>za</item>
+    <!-- Array of country code and name pairs -->
+    <string-array name="country_code_name_pairs">
+        <item>ae:United Arab Emirates</item>
+        <item>ar:Argentina</item>
+        <item>at:Austria</item>
+        <item>au:Australia</item>
+        <item>be:Belgium</item>
+        <item>bg:Bulgaria</item>
+        <item>br:Brazil</item>
+        <item>ca:Canada</item>
+        <item>ch:Switzerland</item>
+        <item>cn:China</item>
+        <item>co:Colombia</item>
+        <item>cu:Cuba</item>
+        <item>cz:Czech Republic</item>
+        <item>de:Germany</item>
+        <item>eg:Egypt</item>
+        <item>fr:France</item>
+        <item>gb:United Kingdom</item>
+        <item>gr:Greece</item>
+        <item>hk:Hong Kong</item>
+        <item>hu:Hungary</item>
+        <item>id:Indonesia</item>
+        <item>ie:Ireland</item>
+        <item>il:Israel</item>
+        <item>in:India</item>
+        <item>it:Italy</item>
+        <item>jp:Japan</item>
+        <item>kr:South Korea</item>
+        <item>lt:Lithuania</item>
+        <item>lv:Latvia</item>
+        <item>ma:Morocco</item>
+        <item>mx:Mexico</item>
+        <item>my:Malaysia</item>
+        <item>ng:Nigeria</item>
+        <item>nl:Netherlands</item>
+        <item>no:Norway</item>
+        <item>nz:New Zealand</item>
+        <item>ph:Philippines</item>
+        <item>pl:Poland</item>
+        <item>pt:Portugal</item>
+        <item>ro:Romania</item>
+        <item>rs:Serbia</item>
+        <item>ru:Russia</item>
+        <item>sa:Saudi Arabia</item>
+        <item>se:Sweden</item>
+        <item>sg:Singapore</item>
+        <item>si:Slovenia</item>
+        <item>sk:Slovakia</item>
+        <item>th:Thailand</item>
+        <item>tr:Turkey</item>
+        <item>tw:Taiwan</item>
+        <item>ua:Ukraine</item>
+        <item>us:United States</item>
+        <item>ve:Venezuela</item>
+        <item>za:South Africa</item>
     </string-array>
 </resources>

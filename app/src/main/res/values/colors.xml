@@ -5,4 +5,8 @@
     <color name="sourceItemBackground">#D8BFD8</color>
     <color name="sourceItemTextPrimary">#535353</color>
     <color name="sourceItemTextSecondary">#585858</color>
+
+    <color name="country_selection_item_background_color">#FFA500</color>
+    <color name="country_selection_item_text_color">#000000</color>
+
 </resources>

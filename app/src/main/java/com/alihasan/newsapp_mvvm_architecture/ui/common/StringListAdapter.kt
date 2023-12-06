@@ -12,9 +12,11 @@ import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineActivity
 
 class StringListAdapter(
     private val context: Context,
-    private val items: List<String>,
+    private val titleList: List<String>,
+    private val codeList: List<String>,
     private val backgroundColor: Int,
-    private val textColor: Int
+    private val textColor: Int,
+    private val intentType: IntentType
 ) : RecyclerView.Adapter<StringListAdapter.ViewHolder>() {
 
     enum class IntentType {
@@ -28,25 +30,35 @@ class StringListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(codeList[position])
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return codeList.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textViewItem: TextView = itemView.findViewById(R.id.textViewItem)
 
         fun bind(item: String) {
-            textViewItem.text = item
+            textViewItem.text = titleList[bindingAdapterPosition]
             textViewItem.setBackgroundColor(backgroundColor)
             textViewItem.setTextColor(textColor)
 
-//            itemView.setOnClickListener {
-//                val intent = createIntent(context, item)
-//                itemView.context.startActivity(intent)
-//            }
+            itemView.setOnClickListener {
+                val intent = createIntent(context, item)
+                itemView.context.startActivity(intent)
+            }
+        }
+
+        private fun createIntent(context: Context, item: String): Intent {
+            return when (intentType) {
+                IntentType.COUNTRY -> TopHeadlineActivity.getStartIntentForCountry(context, item)
+                IntentType.SOURCE -> TopHeadlineActivity.getStartIntentForSource(context, item)
+                IntentType.LANGUAGE -> TopHeadlineActivity.getStartIntentForLanguage(context, item)
+            }
         }
     }
+
+
 }
