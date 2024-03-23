@@ -1,12 +1,11 @@
 package com.alihasan.newsapp_mvvm_architecture.di.module
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import com.alihasan.newsapp_mvvm_architecture.R
-import com.alihasan.newsapp_mvvm_architecture.di.BackgroundColor
-import com.alihasan.newsapp_mvvm_architecture.di.TextColor
-import com.alihasan.newsapp_mvvm_architecture.ui.common.IntentfulListAdapter
+import androidx.lifecycle.ViewModelProvider
+import com.alihasan.newsapp_mvvm_architecture.data.repository.LanguageListRepository
+import com.alihasan.newsapp_mvvm_architecture.ui.base.ViewModelProviderFactory
+import com.alihasan.newsapp_mvvm_architecture.ui.languageselection.LanguageSelectionAdapter
+import com.alihasan.newsapp_mvvm_architecture.ui.languageselection.LanguageSelectionViewModel
 import dagger.Module
 import dagger.Provides
 
@@ -14,44 +13,14 @@ import dagger.Provides
 class LanguageSelectionActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
-    fun provideContext(): Context {
-        return activity
+    fun provideLanguageListViewModel(
+        languageListRepository: LanguageListRepository
+    ): LanguageSelectionViewModel {
+        return ViewModelProvider(activity, ViewModelProviderFactory(LanguageSelectionViewModel::class) {
+            LanguageSelectionViewModel(languageListRepository)
+        })[LanguageSelectionViewModel::class.java]
     }
 
     @Provides
-    fun provideListOfLanguagesName(): List<String> {
-        val languageCodeNamePairs = activity.resources.getStringArray(R.array.language_code_name_pairs)
-        return languageCodeNamePairs.map { pair ->
-            pair.split(":")[1]
-        }
-    }
-
-    @Provides
-    fun provideListOfLanguages(): List<String> {
-        val languageCodeNamePairs = activity.resources.getStringArray(R.array.language_code_name_pairs)
-        return languageCodeNamePairs.map { pair ->
-            pair.split(":")[0]
-        }
-    }
-
-    @Provides
-    fun provideStringListAdapter(
-        context: Context,
-        @BackgroundColor backgroundColor: Int,
-        @TextColor textColor: Int
-    ): IntentfulListAdapter {
-        return IntentfulListAdapter(context, provideListOfLanguagesName(), provideListOfLanguages(), backgroundColor, textColor, IntentfulListAdapter.IntentType.LANGUAGE)
-    }
-
-    @Provides
-    @BackgroundColor
-    fun provideBackgroundColor(): Int {
-        return ContextCompat.getColor(activity, R.color.language_selection_item_background_color)
-    }
-
-    @Provides
-    @TextColor
-    fun provideTextColor(): Int {
-        return ContextCompat.getColor(activity, R.color.language_selection_item_text_color)
-    }
+    fun provideLanguageListAdapter() = LanguageSelectionAdapter(ArrayList())
 }

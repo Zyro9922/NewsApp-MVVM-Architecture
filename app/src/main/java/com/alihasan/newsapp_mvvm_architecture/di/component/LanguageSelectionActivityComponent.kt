@@ -5,6 +5,7 @@ import com.alihasan.newsapp_mvvm_architecture.di.module.LanguageSelectionActivit
 import com.alihasan.newsapp_mvvm_architecture.ui.languageselection.LanguageSelectionActivity
 import dagger.Component
 
+@ActivityScope
 @Component(modules = [LanguageSelectionActivityModule::class])
 interface LanguageSelectionActivityComponent {
 

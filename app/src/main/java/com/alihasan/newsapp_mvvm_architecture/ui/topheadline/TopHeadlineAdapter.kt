@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.RecyclerView
+import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.data.model.TopHeadlineModel.Article
 import com.alihasan.newsapp_mvvm_architecture.databinding.TopHeadlineItemLayoutBinding
 import com.bumptech.glide.Glide
@@ -21,6 +22,7 @@ class TopHeadlineAdapter @Inject constructor (private var articles: List<Article
             binding.textViewSource.text = article.source.name
             Glide.with(binding.imageViewBanner.context)
                 .load(article.imageUrl)
+                .fallback(R.drawable.baseline_broken_image_24)
                 .into(binding.imageViewBanner)
             itemView.setOnClickListener {
                 val builder = CustomTabsIntent.Builder()

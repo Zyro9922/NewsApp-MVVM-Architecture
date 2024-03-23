@@ -1,32 +1,84 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.languageselection
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.alihasan.newsapp_mvvm_architecture.R
+import com.alihasan.newsapp_mvvm_architecture.data.model.Language
+import com.alihasan.newsapp_mvvm_architecture.databinding.ActivityLanguageSelectionBinding
 import com.alihasan.newsapp_mvvm_architecture.di.component.DaggerLanguageSelectionActivityComponent
 import com.alihasan.newsapp_mvvm_architecture.di.module.LanguageSelectionActivityModule
-import com.alihasan.newsapp_mvvm_architecture.ui.common.IntentfulListAdapter
+import com.alihasan.newsapp_mvvm_architecture.ui.base.UiState
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LanguageSelectionActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var adapter: IntentfulListAdapter
+    lateinit var languageListViewModel: LanguageSelectionViewModel
+
+    @Inject
+    lateinit var languageListAdapter: LanguageSelectionAdapter
+
+    private lateinit var binding: ActivityLanguageSelectionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        injectDependencies()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_language_selection)
+        binding = ActivityLanguageSelectionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupUI()
+        setupObserver()
+    }
 
-        // Dagger injection
+    private fun setupUI() {
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = languageListAdapter
+        }
+    }
+
+    private fun setupObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                languageListViewModel.languageUiState.collect {
+                    when (it) {
+                        is UiState.Success -> {
+                            renderList(it.data)
+                            binding.recyclerView.visibility = View.VISIBLE
+                        }
+
+                        is UiState.Loading -> {
+                            binding.apply {
+                                recyclerView.visibility = View.GONE
+                            }
+                        }
+
+                        is UiState.Error -> {
+                            //Handle Error
+                            Toast.makeText(
+                                this@LanguageSelectionActivity,
+                                it.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun renderList(languageList: List<Language>) {
+        languageListAdapter.addLanguage(languageList)
+        languageListAdapter.notifyDataSetChanged()
+    }
+
+    private fun injectDependencies() {
         DaggerLanguageSelectionActivityComponent.builder()
             .languageSelectionActivityModule(LanguageSelectionActivityModule(this)).build().inject(this)
-
-        // Create an instance of StringListAdapter
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
     }
 }
