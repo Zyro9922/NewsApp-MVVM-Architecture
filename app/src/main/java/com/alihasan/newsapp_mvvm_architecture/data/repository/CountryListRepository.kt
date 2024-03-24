@@ -10,7 +10,7 @@ import javax.inject.Inject
 @ActivityScope
 class CountryListRepository @Inject constructor() {
 
-    fun getLanguages(): Flow<List<Country>> {
+    fun getCountries(): Flow<List<Country>> {
         return flow { emit(AppConstant.COUNTRIES) }
     }
 

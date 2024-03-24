@@ -11,7 +11,7 @@ import com.alihasan.newsapp_mvvm_architecture.data.model.Language
 import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineActivity
 
 class LanguageSelectionAdapter(
-    private val languageList: ArrayList<Language>
+    private var languageList: List<Language>
 ) : RecyclerView.Adapter<LanguageSelectionAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,7 +43,7 @@ class LanguageSelectionAdapter(
         }
     }
 
-    fun addLanguage(list: List<Language>) {
-        languageList.addAll(list)
+    fun setLanguages(list: List<Language>) {
+        languageList = list
     }
 }

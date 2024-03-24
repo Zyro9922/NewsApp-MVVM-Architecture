@@ -40,6 +40,10 @@ class CountrySelectionActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = countryListAdapter
         }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            countryListViewModel.fetchCountries()
+        }
     }
 
     private fun setupObserver() {
@@ -70,10 +74,14 @@ class CountrySelectionActivity : AppCompatActivity() {
                 }
             }
         }
+
+        countryListViewModel.refreshingState.observe(this) { refreshingState ->
+            binding.swipeRefreshLayout.isRefreshing = refreshingState
+        }
     }
 
     private fun renderList(countryList: List<Country>) {
-        countryListAdapter.addCountries(countryList)
+        countryListAdapter.setCountries(countryList)
         countryListAdapter.notifyDataSetChanged()
     }
 

@@ -11,7 +11,7 @@ import com.alihasan.newsapp_mvvm_architecture.data.model.Country
 import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineActivity
 
 class CountrySelectionAdapter(
-    private val countryList: ArrayList<Country>
+    private var countryList: List<Country>
 ) : RecyclerView.Adapter<CountrySelectionAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,7 +43,7 @@ class CountrySelectionAdapter(
         }
     }
 
-    fun addCountries(list: List<Country>) {
-        countryList.addAll(list)
+    fun setCountries(list: List<Country>) {
+        countryList = list
     }
 }

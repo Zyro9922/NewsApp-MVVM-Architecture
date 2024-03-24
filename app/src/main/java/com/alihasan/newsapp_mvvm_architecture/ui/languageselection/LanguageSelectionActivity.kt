@@ -40,6 +40,10 @@ class LanguageSelectionActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = languageListAdapter
         }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            languageListViewModel.fetchLanguages()
+        }
     }
 
     private fun setupObserver() {
@@ -70,10 +74,14 @@ class LanguageSelectionActivity : AppCompatActivity() {
                 }
             }
         }
+
+        languageListViewModel.refreshingState.observe(this) { refreshingState ->
+            binding.swipeRefreshLayout.isRefreshing = refreshingState
+        }
     }
 
     private fun renderList(languageList: List<Language>) {
-        languageListAdapter.addLanguage(languageList)
+        languageListAdapter.setLanguages(languageList)
         languageListAdapter.notifyDataSetChanged()
     }
 

@@ -1,5 +1,7 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.languageselection
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alihasan.newsapp_mvvm_architecture.data.model.Language
@@ -16,8 +18,10 @@ class LanguageSelectionViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _languageUiState = MutableStateFlow<UiState<List<Language>>>(UiState.Loading)
-
     val languageUiState: StateFlow<UiState<List<Language>>> = _languageUiState
+
+    private val _refreshingState = MutableLiveData<Boolean>(false)
+    val refreshingState: LiveData<Boolean> get() = _refreshingState
 
     init {
         fetchLanguages()
@@ -25,12 +29,18 @@ class LanguageSelectionViewModel @Inject constructor(
 
     fun fetchLanguages() {
         viewModelScope.launch {
-            languageListRepository.getLanguages()
-                .catch { e ->
-                    _languageUiState.value = UiState.Error(e.toString())
-                }.collect {
-                    _languageUiState.value = UiState.Success(it)
-                }
+            _refreshingState.value = true
+            try{
+                languageListRepository.getLanguages()
+                    .catch { e ->
+                        _languageUiState.value = UiState.Error(e.toString())
+                    }.collect {
+                        _languageUiState.value = UiState.Success(it)
+                    }
+            } finally {
+                _refreshingState.value = false
+            }
+
         }
     }
 }
