@@ -10,8 +10,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alihasan.newsapp_mvvm_architecture.data.model.Language
 import com.alihasan.newsapp_mvvm_architecture.databinding.ActivityLanguageSelectionBinding
-import com.alihasan.newsapp_mvvm_architecture.di.component.DaggerLanguageSelectionActivityComponent
-import com.alihasan.newsapp_mvvm_architecture.di.module.LanguageSelectionActivityModule
+import com.alihasan.newsapp_mvvm_architecture.di.component.DaggerActivityComponent
+import com.alihasan.newsapp_mvvm_architecture.di.module.ActivityModule
 import com.alihasan.newsapp_mvvm_architecture.ui.base.UiState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -86,7 +86,7 @@ class LanguageSelectionActivity : AppCompatActivity() {
     }
 
     private fun injectDependencies() {
-        DaggerLanguageSelectionActivityComponent.builder()
-            .languageSelectionActivityModule(LanguageSelectionActivityModule(this)).build().inject(this)
+        DaggerActivityComponent.builder()
+            .activityModule(ActivityModule(this)).build().inject(this)
     }
 }

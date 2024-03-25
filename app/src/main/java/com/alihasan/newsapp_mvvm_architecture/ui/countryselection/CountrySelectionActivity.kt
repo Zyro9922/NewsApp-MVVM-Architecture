@@ -10,8 +10,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alihasan.newsapp_mvvm_architecture.data.model.Country
 import com.alihasan.newsapp_mvvm_architecture.databinding.ActivityCountrySelectionBinding
-import com.alihasan.newsapp_mvvm_architecture.di.component.DaggerCountrySelectionActivityComponent
-import com.alihasan.newsapp_mvvm_architecture.di.module.CountrySelectionActivityModule
+import com.alihasan.newsapp_mvvm_architecture.di.component.DaggerActivityComponent
+import com.alihasan.newsapp_mvvm_architecture.di.module.ActivityModule
 import com.alihasan.newsapp_mvvm_architecture.ui.base.UiState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -86,7 +86,7 @@ class CountrySelectionActivity : AppCompatActivity() {
     }
 
     private fun injectDependencies() {
-        DaggerCountrySelectionActivityComponent.builder()
-            .countrySelectionActivityModule(CountrySelectionActivityModule(this)).build().inject(this)
+        DaggerActivityComponent.builder()
+            .activityModule(ActivityModule(this)).build().inject(this)
     }
 }
