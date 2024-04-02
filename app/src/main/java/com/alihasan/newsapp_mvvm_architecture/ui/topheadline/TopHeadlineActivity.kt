@@ -12,7 +12,7 @@ class TopHeadlineActivity : AppCompatActivity() {
     companion object {
 
         const val EXTRAS_COUNTRY = "EXTRAS_COUNTRY"
-        const val EXTRAS_SOURCE = "EXTRAS_SOURCE"
+        const val EXTRAS_SOURCE_ID = "EXTRAS_SOURCE"
         const val EXTRAS_LANGUAGE = "EXTRAS_LANGUAGE"
 
         fun getStartIntentForCountry(context: Context, country: String): Intent {
@@ -22,10 +22,10 @@ class TopHeadlineActivity : AppCompatActivity() {
                 }
         }
 
-        fun getStartIntentForSource(context: Context, source: String): Intent {
+        fun getStartIntentForSourceId(context: Context, sourceId: String): Intent {
             return Intent(context, TopHeadlineActivity::class.java)
                 .apply {
-                    putExtra(EXTRAS_SOURCE, source)
+                    putExtra(EXTRAS_SOURCE_ID, sourceId)
                 }
         }
 
@@ -48,12 +48,17 @@ class TopHeadlineActivity : AppCompatActivity() {
     }
 
     private fun handleFetchingAndOpeningFragment() {
-        val extrasSource = intent.getStringExtra(EXTRAS_SOURCE)
         val extrasCountry = intent.getStringExtra(EXTRAS_COUNTRY)
         val extrasLanguage = intent.getStringExtra(EXTRAS_LANGUAGE)
+        val extrasSourceId = intent.getStringExtra(EXTRAS_SOURCE_ID)
 
-        // Open TopHeadlineFragment
-        val fragment = TopHeadlineFragment.newInstance(extrasCountry, extrasSource, extrasLanguage)
+        val fragment = when {
+            extrasCountry != null -> TopHeadlineFragment.forCountry(extrasCountry)
+            extrasLanguage != null -> TopHeadlineFragment.forLanguage(extrasLanguage)
+            extrasSourceId != null -> TopHeadlineFragment.forSource(extrasSourceId)
+            else -> TopHeadlineFragment.newInstance()
+        }
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .commit()

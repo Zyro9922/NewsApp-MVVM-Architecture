@@ -17,7 +17,7 @@ import com.alihasan.newsapp_mvvm_architecture.di.module.TopHeadlineFragmentModul
 import com.alihasan.newsapp_mvvm_architecture.ui.base.UiState
 import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineActivity.Companion.EXTRAS_COUNTRY
 import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineActivity.Companion.EXTRAS_LANGUAGE
-import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineActivity.Companion.EXTRAS_SOURCE
+import com.alihasan.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineActivity.Companion.EXTRAS_SOURCE_ID
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -101,11 +101,16 @@ class TopHeadlineFragment : Fragment() {
 
     private fun handleFetchingFromTopHeadlineActivity() {
         val country = arguments?.getString(EXTRAS_COUNTRY)
-        val source = arguments?.getString(EXTRAS_SOURCE)
+        val sourceId = arguments?.getString(EXTRAS_SOURCE_ID)
         val language = arguments?.getString(EXTRAS_LANGUAGE)
 
-        topHeadlineViewModel.fetchTopHeadlines(country, source, language)
+        when {
+            country != null -> topHeadlineViewModel.fetchTopHeadlinesByCountry(country)
+            sourceId != null -> topHeadlineViewModel.fetchTopHeadlinesBySourcesId(sourceId)
+            language != null -> topHeadlineViewModel.fetchTopHeadlinesByLanguage(language)
+        }
     }
+
 
     // Search function to be called from SearchActivity
     fun search(query: String) {
@@ -114,11 +119,29 @@ class TopHeadlineFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(country: String? = null, source: String? = null, language: String? = null): TopHeadlineFragment {
-            return TopHeadlineFragment().apply {
+        fun newInstance(): TopHeadlineFragment {
+            return TopHeadlineFragment()
+        }
+
+        fun forCountry(country: String): TopHeadlineFragment {
+            return newInstance().apply {
                 arguments = Bundle().apply {
                     putString(EXTRAS_COUNTRY, country)
-                    putString(EXTRAS_SOURCE, source)
+                }
+            }
+        }
+
+        fun forSource(source: String): TopHeadlineFragment {
+            return newInstance().apply {
+                arguments = Bundle().apply {
+                    putString(EXTRAS_SOURCE_ID, source)
+                }
+            }
+        }
+
+        fun forLanguage(language: String): TopHeadlineFragment {
+            return newInstance().apply {
+                arguments = Bundle().apply {
                     putString(EXTRAS_LANGUAGE, language)
                 }
             }

@@ -1,9 +1,7 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.newssource
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.RecyclerView
 import com.alihasan.newsapp_mvvm_architecture.R
 import com.alihasan.newsapp_mvvm_architecture.data.model.SourceModel.Source
@@ -22,7 +20,7 @@ class NewsSourceAdapter @Inject constructor(private var sources: List<Source>) :
             binding.categoryTextView.text = "${itemView.context.getString(R.string.category_text)}: ${source.category.capitalize()}"
 
             itemView.setOnClickListener {
-                val intent = TopHeadlineActivity.getStartIntentForSource(itemView.context, source.id)
+                val intent = TopHeadlineActivity.getStartIntentForSourceId(itemView.context, source.id)
                 itemView.context.startActivity(intent)
             }
         }

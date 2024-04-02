@@ -54,7 +54,7 @@ class IntentfulListAdapter(
         private fun createIntent(context: Context, item: String): Intent {
             return when (intentType) {
                 IntentType.COUNTRY -> TopHeadlineActivity.getStartIntentForCountry(context, item)
-                IntentType.SOURCE -> TopHeadlineActivity.getStartIntentForSource(context, item)
+                IntentType.SOURCE -> TopHeadlineActivity.getStartIntentForSourceId(context, item)
                 IntentType.LANGUAGE -> TopHeadlineActivity.getStartIntentForLanguage(context, item)
             }
         }

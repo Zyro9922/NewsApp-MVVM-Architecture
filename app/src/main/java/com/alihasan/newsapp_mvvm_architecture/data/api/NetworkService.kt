@@ -10,13 +10,25 @@ import javax.inject.Singleton
 
 @Singleton
 interface NetworkService {
+
     @Headers("X-Api-Key: $API_KEY")
     @GET("top-headlines")
-    suspend fun getTopHeadlines(
-        @Query("country") country: String? = null,
-        @Query("sources") sources: String? = null,
-        @Query("language") language: String? = null
+    suspend fun getTopHeadlinesForCountry(
+        @Query("country") country: String
     ): TopHeadlinesResponse
+
+    @Headers("X-Api-Key: $API_KEY")
+    @GET("top-headlines")
+    suspend fun getTopHeadlinesForSourceId(
+        @Query("sources") country: String
+    ): TopHeadlinesResponse
+
+    @Headers("X-Api-Key: $API_KEY")
+    @GET("top-headlines")
+    suspend fun getTopHeadlinesForLanguage(
+        @Query("language") country: String
+    ): TopHeadlinesResponse
+
 
     @Headers("X-Api-Key: $API_KEY")
     @GET("top-headlines/sources")
