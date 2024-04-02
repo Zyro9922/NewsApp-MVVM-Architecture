@@ -70,6 +70,11 @@ class LanguageSelectionActivity : AppCompatActivity() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+                        is UiState.NoData -> {
+                            binding.apply {
+                                recyclerView.visibility = View.GONE
+                            }
+                        }
                     }
                 }
             }

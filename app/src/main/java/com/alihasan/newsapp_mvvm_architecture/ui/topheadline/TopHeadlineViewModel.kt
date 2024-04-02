@@ -68,7 +68,12 @@ class TopHeadlineViewModel @Inject constructor(
 
     private fun updateUiStateWithArticles(articles: List<Article>) {
         val filteredArticles = articles.filter { it.title != "[Removed]" }
-        _uiState.value = UiState.Success(filteredArticles)
+
+        if (filteredArticles.isEmpty()) {
+            _uiState.value = UiState.NoData
+        } else {
+            _uiState.value = UiState.Success(filteredArticles)
+        }
     }
 
     fun fetchSearchResults(query: String) {

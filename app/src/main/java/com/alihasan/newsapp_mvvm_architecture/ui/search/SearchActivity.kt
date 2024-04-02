@@ -92,6 +92,11 @@ class SearchActivity : AppCompatActivity() {
                             // Handle Error
                             Toast.makeText(this@SearchActivity, it.message, Toast.LENGTH_LONG).show()
                         }
+                        is UiState.NoData -> {
+                            binding.apply {
+                                recyclerView.visibility = View.GONE
+                            }
+                        }
                     }
                 }
             }

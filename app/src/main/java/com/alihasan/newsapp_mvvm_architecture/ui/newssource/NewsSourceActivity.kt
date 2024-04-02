@@ -1,7 +1,6 @@
 package com.alihasan.newsapp_mvvm_architecture.ui.newssource
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -67,6 +66,11 @@ class NewsSourceActivity : AppCompatActivity() {
                             // Handle Error
                             Toast.makeText(this@NewsSourceActivity, it.message, Toast.LENGTH_LONG)
                                 .show()
+                        }
+                        is UiState.NoData -> {
+                            binding.apply {
+                                recyclerView.visibility = View.GONE
+                            }
                         }
                     }
                 }

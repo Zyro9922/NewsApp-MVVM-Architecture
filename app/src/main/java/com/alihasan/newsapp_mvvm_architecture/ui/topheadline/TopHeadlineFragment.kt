@@ -43,7 +43,7 @@ class TopHeadlineFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         injectDependencies()
-        initializeRecyclerView()
+        initializeUi()
         setupObserver()
         handleFetchingFromTopHeadlineActivity()
     }
@@ -59,12 +59,16 @@ class TopHeadlineFragment : Fragment() {
         _binding = null
     }
 
-    private fun initializeRecyclerView() {
+    private fun initializeUi() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = articleAdapter
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             handleFetchingFromTopHeadlineActivity()
+        }
+
+        binding.includeLayout.navigateBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
 
@@ -87,6 +91,10 @@ class TopHeadlineFragment : Fragment() {
                                 it.message,
                                 Toast.LENGTH_LONG
                             ).show()
+                        }
+                        is UiState.NoData -> {
+                            binding.recyclerView.visibility = View.GONE
+                            binding.includeLayout.noDataLayout.visibility = View.VISIBLE
                         }
                     }
                 }

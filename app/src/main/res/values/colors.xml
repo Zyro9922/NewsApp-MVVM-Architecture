@@ -11,4 +11,6 @@
 
     <color name="language_selection_item_background_color">#4285F4</color>
     <color name="language_selection_item_text_color">#FFFFFF</color>
+
+    <color name="no_data_color">#FF5722</color>
 </resources>
